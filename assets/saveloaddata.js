@@ -1,3 +1,5 @@
+const DATA;
+
 function saveData() {
   const request = indexedDB.open('storage', 1);
   
@@ -23,7 +25,8 @@ function saveData() {
       
       transaction.oncomplete = () => {
         console.log('データの保存が完了しました');
-        loadData();
+        DATA = value;
+        dataLoadedHandler();
       };
       
       transaction.onerror = () => {
@@ -54,6 +57,8 @@ function loadData() {
       const result = e.target.result;
       if(request) {
         console.log('読み込んだデータ: ', result.value);
+        DATA = result.value;
+        dataLoadedHandler();
       } else {
         console.log('データが見つかりませんでした');
         saveData();
