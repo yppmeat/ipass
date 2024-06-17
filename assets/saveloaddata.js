@@ -56,6 +56,7 @@ function loadData() {
         console.log('読み込んだデータ: ', result.value);
       } else {
         console.log('データが見つかりませんでした');
+        saveData();
       }
     };
     
