@@ -68,5 +68,3 @@ function loadData() {
     console.error('データベースの使用に失敗しました');
   }
 }
-
-saveData();
