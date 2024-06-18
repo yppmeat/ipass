@@ -1,7 +1,10 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&display=swap");
 html {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
+  font-family: "IBM Plex Sans JP", sans-serif;
 }
 
 ::-moz-selection {
@@ -100,10 +103,14 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: 0.2s opacity;
+  transition: 0.2s opacity, 0.1s box-shadow;
 }
 button:hover {
   opacity: 0.8;
+}
+button:active {
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+  transition: none;
 }
 button:after {
   content: "NEXT";
@@ -113,4 +120,35 @@ button:after {
   color: rgba(255, 255, 255, 0.4);
   font-weight: normal;
   font-size: 90%;
+}
+
+.info > div {
+  padding-left: 0.75rem;
+}
+.info h3 {
+  margin-left: -0.75rem;
+}
+.info h3:before {
+  content: "❏";
+  margin-right: 5px;
+}
+.info span {
+  padding-left: 0.75rem;
+}
+.info input {
+  padding: 0.75rem 2rem;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.25s transform, 0.25s box-shadow;
+}
+.info input:hover {
+  transform: scale(105%);
+  box-shadow: inset 0px 6px 10px -8px rgb(162, 162, 162);
+}
+.info .ans {
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
 }/*# sourceMappingURL=style.css.map */
