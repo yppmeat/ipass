@@ -198,6 +198,15 @@ button {
       box-shadow: inset 0px 6px 10px -8px rgb(162, 162, 162);
     }
   }
+  .kako {
+    a {
+      text-decoration: none;
+      color: #1370c8;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .popup {

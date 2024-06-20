@@ -194,6 +194,13 @@ button:after {
   transform: scale(105%);
   box-shadow: inset 0px 6px 10px -8px rgb(162, 162, 162);
 }
+.info .kako a {
+  text-decoration: none;
+  color: #1370c8;
+}
+.info .kako a:hover {
+  text-decoration: underline;
+}
 
 .popup {
   display: flex;

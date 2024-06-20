@@ -42,7 +42,7 @@ function dataLoadedHandler() {
         <span *as="category"></span>
       </div>
       <div>
-        <h3>正解</h3>
+        <h3 *as="scroll">正解</h3>
         <input type="button" value="正解を表示する" *onclick=${showAnswer} *as="ansBtn">
         <div class="ansList">
           <span class="ans" *as="ans"></span><span class="ansSelected" *as="ansSelected"></span>
@@ -84,6 +84,10 @@ function dataLoadedHandler() {
           </div>
         </div>
       </div>
+      <div>
+        <h3>過去の出題歴</h3>
+        <div class="kako" *as="kako"></div>
+      </div>
     </div>
     <div class="footerBtn" *as="footer">
       <button *onclick=${onClickHandler}>次の問題</button>
@@ -124,7 +128,7 @@ function showAnswer(e) {
   q.ans.innerText = ['ア', 'イ', 'ウ', 'エ'][ansIndex];
   q.explain.classList.add('show');
   requestAnimationFrame(() => {
-    q.explain.scrollIntoView({ behavior: 'smooth', inline: 'end' });
+    q.scroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
 
@@ -162,8 +166,25 @@ function reload() {
   q.ansBtn.style.display = 'block';
   q.ans.innerText = '';
   q.ansSelected.innerText = '';
+  
+  const kako = answer[ansIndex][2];
+  if(!kako.length) {
+    q.kako.innerText = '出題歴がありません';
+  } else {
+    q.kako.innerHTML = kako.map(v => {
+      return getLink(v);
+    }).join('<br>');
+  }
 
   i++;
+}
+
+function getLink(s) {
+  const [, era, year, type, index] = s.match(/^([HR])(\d\d)([HAT])(\d\d?)$/);
+  const text = `${{ H: '平成', R: '令和' }[era]}${+year}年${{ H: '春', A: '秋', T: '特別' }[type]} 問${index}`;
+  const dir = `${year}_${{ H: 'haru', A: 'aki', T: 'toku' }[type]}/q${index}.html`;
+  const bassURL = 'https://www.itpassportsiken.com/kakomon/';
+  return `<a href="${bassURL}${dir}" target="_blank">${text}</a>`;
 }
 
 function random(len) {
