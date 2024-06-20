@@ -101,7 +101,7 @@ function dataLoadedHandler() {
 
 function linkClick(e) {
   if(e.clientX < e.target.getBoundingClientRect().left) {
-    window.open('https://google.com/search?q=' + answer[e.target.dataset.index][0] + 'とは IT用語', '_blank');
+    window.open('https://google.com/search?q=' + answer[e.target.dataset.index][0] + 'とは IT', '_blank');
   }
 }
 
