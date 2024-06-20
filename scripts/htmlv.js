@@ -101,7 +101,6 @@ Object.setPrototypeOf(htmlv, {
 });
 function sanitize(s) {
   return s
-    .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')

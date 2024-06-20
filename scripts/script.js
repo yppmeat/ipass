@@ -1,4 +1,4 @@
-let DATA;
+let DATA, ABBRE;
 
 fetch('data/data.json', {
   cache: 'no-cache'
@@ -6,10 +6,17 @@ fetch('data/data.json', {
 .then(res => res.json())
 .then(res => {
   DATA = res;
-  dataLoadedHandler();
+  fetch('data/abbre.json', {
+    cache: 'no-cache'
+  })
+  .then(res => res.json())
+  .then(res => {
+    ABBRE = res;
+    dataLoadedHandler();
+  });
 });
 
-let q, i = 1;
+let q;
 function dataLoadedHandler() {
   function onClickHandler() {
     reload();
@@ -21,19 +28,19 @@ function dataLoadedHandler() {
     <div class="select">
       <div>
         <input type="button" value="ア" *onclick=${ansClick}>
-        <span *as="ans0"></span>
+        <span *as="ans0" *onclick=${spanClick}></span>
       </div>
       <div>
         <input type="button" value="イ" *onclick=${ansClick}>
-        <span *as="ans1"></span>
+        <span *as="ans1" *onclick=${spanClick}></span>
       </div>
       <div>
         <input type="button" value="ウ" *onclick=${ansClick}>
-        <span *as="ans2"></span>
+        <span *as="ans2" *onclick=${spanClick}></span>
       </div>
       <div>
         <input type="button" value="エ" *onclick=${ansClick}>
-        <span *as="ans3"></span>
+        <span *as="ans3" *onclick=${spanClick}></span>
       </div>
     </div>
     <div class="info">
@@ -61,8 +68,13 @@ function dataLoadedHandler() {
   reload();
 }
 
+function spanClick(e) {
+  e.target.closest('div').classList.toggle('disabled');
+}
+
 function ansClick(e) {
-  
+  q.ansSelected.innerText = '“あなたの回答：' + e.target.value + '”';
+  showAnswer({ target: q.ansBtn });
 }
 
 function showAnswer(e) {
@@ -70,7 +82,7 @@ function showAnswer(e) {
   q.ans.innerText = ['ア', 'イ', 'ウ', 'エ'][ansIndex];
 }
 
-let ansIndex;
+let ansIndex, i = 1, qType;
 function reload() {
   const { result: [question], arr: dataCopy } = selectFromArr(DATA, 1);
   const answer = selectFromArr(dataCopy, 3).result;
@@ -80,14 +92,20 @@ function reload() {
   q.number0.innerText = 'ITパスポート用語集 問' + i;
   q.number1.innerText = '問' + i;
   
-  q.question.innerText = question[0] + 'についての説明はどれか。';
+  qType = random(2);
+  if(qType) {
+    q.question.innerHTML = setHints(sanitize(question[0])) + 'についての説明はどれか。';
+  } else {
+    q.question.innerHTML = '以下の説明に合致する用語はどれか。<br>' + setHints(sanitize(question[1]));
+  }
   answer.forEach((v, i) => {
-    console.log(v);
-    q['ans' + i].innerText = v[1];
+    q['ans' + i].innerHTML = setHints(sanitize(qType ? v[1] : v[0]));
+    q['ans' + i].parentElement.classList.remove('disabled');
   });
-  
+
   q.ansBtn.style.display = 'block';
   q.ans.innerText = '';
+  q.ansSelected.innerText = '';
 
   i++;
 }
@@ -103,4 +121,22 @@ function selectFromArr(arr, count) {
     result.push(arr.splice(random(arr.length), 1)[0]);
   }
   return { result, arr };
+}
+
+function setHints(s) {
+  const added = [];
+  ABBRE.forEach(v => {
+      const inc = added.some(v2 => v2[0].includes(v[0]));
+      if(s.includes(v[0]) && !inc) {
+          s = s.replaceAll(v[0], `#@${v[0]}#`);
+          added.push(v);
+      }
+  });
+  return s.split('#').map(v => {
+      if(v[0] == '@') {
+          const w = added.find(v2 => v2[0] == v.slice(1));
+          return `<span title="${w[1]}">${w[0]}</span>`;
+      }
+      return v;
+  }).join('');
 }
