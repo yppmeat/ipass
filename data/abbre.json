@@ -1,4 +1,5 @@
 [
+  ["PDCA", ""],
   ["HRTech", "Human Resources Technology"],
   ["EEPROM", "Electrically Erasable Programmable Read-Only Memory"],
   ["S/MIME", "Secure MIME"],
@@ -123,6 +124,7 @@
   ["MDM", "Mobile Device Management"],
   ["PCI", "DSS Payment Card Industry Data Security Standard"],
   ["IEC", "International Electrotechnical Commission"],
+  ["RDB", "Relational Database"],
   ["BI", "Business Intelligence"],
   ["QR", "Quick Response"],
   ["AI", "Artificial Intelligence"],
@@ -136,6 +138,6 @@
   ["OS", "Operating System"],
   ["AR", "Augmented Reality"],
   ["IP", "Internet Protocol"],
-  ["cc", "Carbon COpy"],
+  ["cc", "Carbon Copy"],
   ["CA", "Certification Authority"]
 ]
