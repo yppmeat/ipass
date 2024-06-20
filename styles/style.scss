@@ -7,6 +7,20 @@ html {
   font-family: "IBM Plex Sans JP", sans-serif;
 }
 
+@keyframes uzai {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+img {
+  animation: uzai linear 20s infinite;
+  height: 100%;
+}
+
 ::selection {
   color: rgb(249, 249, 249);
   background: rgb(235, 127, 32);
@@ -142,6 +156,11 @@ button {
 }
 
 .info {
+  .ansList {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
   > div {
     padding-left: 0.75rem;
   }
@@ -175,5 +194,86 @@ button {
   }
   .ansSelected {
     color: #b4b4b4;
+    font-size: 14px;
+  }
+}
+
+.popup {
+  display: flex;
+  border: 1px solid #d5d5d5;
+  width: min-content;
+  padding: 5px 5px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  gap: 15px;
+  box-shadow: 0 0 0 6px #ececec;
+  position: absolute;
+  left: 100px;
+  background-color: white;
+  user-select: none;
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: 1s opacity, 1s transform;
+
+  &.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .left {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ok {
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 30px;
+      width: 30px;
+
+      &:before, &:after {
+        content: '';
+        display: block;
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      &:before {
+        background-color: #00da00;
+        width: 30px;
+        height: 30px;
+      }
+
+      &:after {
+        background-color: white;
+        width: 18px;
+        height: 18px;
+        left: 6px;
+      }
+    }
+
+    .oklogo {
+      background-color: #509ced;
+      color: white;
+      padding: 0 9px;
+      font-size: 11px;
+      border-radius: 3px;
+      box-shadow: 0px 3px 3px -1px #b1b0b0;
+      position: absolute;
+      top: -19px;
+    }
+  }
+
+  .right {
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    letter-spacing: 10px;
+    position: relative;
+    top: 1px;
   }
 }

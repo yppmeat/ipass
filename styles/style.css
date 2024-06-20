@@ -7,6 +7,19 @@ html {
   font-family: "IBM Plex Sans JP", sans-serif;
 }
 
+@keyframes uzai {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+img {
+  animation: uzai linear 20s infinite;
+  height: 100%;
+}
+
 ::-moz-selection {
   color: rgb(249, 249, 249);
   background: rgb(235, 127, 32);
@@ -139,6 +152,11 @@ button:after {
   font-size: 90%;
 }
 
+.info .ansList {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 .info > div {
   padding-left: 0.75rem;
 }
@@ -171,4 +189,80 @@ button:after {
 }
 .info .ansSelected {
   color: #b4b4b4;
+  font-size: 14px;
+}
+
+.popup {
+  display: flex;
+  border: 1px solid #d5d5d5;
+  width: -moz-min-content;
+  width: min-content;
+  padding: 5px 5px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  gap: 15px;
+  box-shadow: 0 0 0 6px #ececec;
+  position: absolute;
+  left: 100px;
+  background-color: white;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: 1s opacity, 1s transform;
+}
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.popup .left {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup .left .ok {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 30px;
+  width: 30px;
+}
+.popup .left .ok:before, .popup .left .ok:after {
+  content: "";
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+}
+.popup .left .ok:before {
+  background-color: #00da00;
+  width: 30px;
+  height: 30px;
+}
+.popup .left .ok:after {
+  background-color: white;
+  width: 18px;
+  height: 18px;
+  left: 6px;
+}
+.popup .left .oklogo {
+  background-color: #509ced;
+  color: white;
+  padding: 0 9px;
+  font-size: 11px;
+  border-radius: 3px;
+  box-shadow: 0px 3px 3px -1px #b1b0b0;
+  position: absolute;
+  top: -19px;
+}
+.popup .right {
+  font-weight: bold;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  letter-spacing: 10px;
+  position: relative;
+  top: 1px;
 }/*# sourceMappingURL=style.css.map */

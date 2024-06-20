@@ -51,7 +51,16 @@ function dataLoadedHandler() {
       <div>
         <h3>正解</h3>
         <input type="button" value="正解を表示する" *onclick=${showAnswer} *as="ansBtn">
-        <span class="ans" *as="ans"></span><span class="ansSelected" *as="ansSelected"></span>
+        <div class="ansList">
+          <span class="ans" *as="ans"></span><span class="ansSelected" *as="ansSelected"></span>
+          <div class="popup" *as="popup">
+            <div class="left">
+              <div class="ok"></div>
+              <div class="oklogo">OK</div>
+            </div>
+            <div class="right">正解</div>
+          </div>
+        </div>
       </div>
       <div>
         <h3>解説</h3>
@@ -74,6 +83,7 @@ function spanClick(e) {
 
 function ansClick(e) {
   q.ansSelected.innerText = '“あなたの回答：' + e.target.value + '”';
+  q.popup.classList.add('show');
   showAnswer({ target: q.ansBtn });
 }
 
@@ -103,6 +113,7 @@ function reload() {
     q['ans' + i].parentElement.classList.remove('disabled');
   });
 
+  q.popup.classList.remove('show');
   q.ansBtn.style.display = 'block';
   q.ans.innerText = '';
   q.ansSelected.innerText = '';
