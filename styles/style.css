@@ -166,6 +166,9 @@ button:after {
 body.hideans .hideshow span:before {
   content: "選択肢を表示";
 }
+body.hideans .select:hover > div > span {
+  visibility: visible;
+}
 body.hideans .select > div > span {
   visibility: hidden;
 }

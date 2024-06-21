@@ -170,8 +170,15 @@ body.hideans {
     }
   }
 
-  .select > div > span {
-    visibility: hidden;
+  .select {
+    &:hover {
+      > div > span {
+        visibility: visible;
+      }
+    }
+    > div > span {
+      visibility: hidden;
+    }
   }
 }
 

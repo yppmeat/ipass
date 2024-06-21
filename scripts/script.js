@@ -99,9 +99,10 @@ function dataLoadedHandler() {
   reload();
   resize();
 }
-
+let hidden = false;
 function hideshow() {
   document.body.classList.toggle('hideans');
+  hidden = !hidden;
 }
 
 function linkClick(e) {
@@ -148,7 +149,7 @@ function reload() {
   const category = getCategory(answer[ansIndex]);
   const subcategory = getCategory(answer[ansIndex], true);
   
-  q.category.innerText = [category, subcategory].join('  »  ');
+  q.category.innerText = [category, subcategory].join('  »  ') + ' No.' + answer[ansIndex][3][1];
   
   q.number0.innerText = 'ITパスポート用語集 問' + i;
   q.number1.innerText = '問' + i;
@@ -169,7 +170,8 @@ function reload() {
     q['k1-' + i].innerHTML = (i == ansIndex ? correct : '') + setHints(sanitize(v[+!qType])) + (qType ? 'についての説明です。' : '');
   });
 
-  q.explain.classList.remove('show');
+  document.body.classList.toggle('hideans', hidden)
+  q.explain.classList.toggle('show');
   q.popup.classList.remove('show');
   q.ansBtn.style.display = 'block';
   q.ans.innerText = '';
