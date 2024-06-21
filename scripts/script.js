@@ -36,6 +36,7 @@ function dataLoadedHandler() {
         <span *as="ans3" *onclick=${spanClick}></span>
       </div>
     </div>
+    <div class="hideshow"><span *onclick=${hideshow}></span></div>
     <div class="info">
       <div>
         <h3>分類</h3>
@@ -99,6 +100,10 @@ function dataLoadedHandler() {
   resize();
 }
 
+function hideshow() {
+  document.body.classList.toggle('hideans');
+}
+
 function linkClick(e) {
   if(e.clientX < e.target.getBoundingClientRect().left) {
     window.open('https://google.com/search?q=' + answer[e.target.dataset.index][0] + 'とは IT', '_blank');
@@ -124,6 +129,7 @@ function ansClick(e) {
 }
 
 function showAnswer(e) {
+  document.body.classList.remove('hideans');
   e.target.style.display = 'none';
   q.ans.innerText = ['ア', 'イ', 'ウ', 'エ'][ansIndex];
   q.explain.classList.add('show');

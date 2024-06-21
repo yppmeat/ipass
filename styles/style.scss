@@ -149,6 +149,32 @@ button {
   }
 }
 
+.hideshow {
+  text-align: end;
+  padding-right: 12px;
+  user-select: none;
+
+  span:before {
+    content: '選択肢を非表示';
+    font-size: 13px;
+    color: grey;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+body.hideans {
+  .hideshow {
+    span:before {
+      content: '選択肢を表示'
+    }
+  }
+
+  .select > div > span {
+    visibility: hidden;
+  }
+}
+
 .info {
   padding-left: 12px;
   
@@ -176,7 +202,7 @@ button {
     }
   }
   input {
-    padding: 8px 32px;
+    padding: 8px 25px;
     border: 1px solid #cccccc;
     border-radius: 5px;
     font-size: 16px;

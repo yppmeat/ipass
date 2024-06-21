@@ -148,6 +148,28 @@ button:after {
   font-size: 90%;
 }
 
+.hideshow {
+  text-align: end;
+  padding-right: 12px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.hideshow span:before {
+  content: "選択肢を非表示";
+  font-size: 13px;
+  color: grey;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+body.hideans .hideshow span:before {
+  content: "選択肢を表示";
+}
+body.hideans .select > div > span {
+  visibility: hidden;
+}
+
 .info {
   padding-left: 12px;
 }
@@ -174,7 +196,7 @@ button:after {
   margin-right: 5px;
 }
 .info input {
-  padding: 8px 32px;
+  padding: 8px 25px;
   border: 1px solid #cccccc;
   border-radius: 5px;
   font-size: 16px;
