@@ -1,8 +1,8 @@
-let DATA, ABBRE, CATEGORY;
+let DATA, WORDS, CATEGORY;
 (async () => {
   const cache = { cache: 'no-cache' };
   DATA = await (await fetch('data/data.json', cache)).json();
-  ABBRE = await (await fetch('data/abbre.json', cache)).json();
+  WORDS = await (await fetch('data/words.json', cache)).json();
   CATEGORY = await (await fetch('data/category.json', cache)).json();
   CATEGORY.category.reverse();
   dataLoadedHandler();
@@ -135,11 +135,13 @@ function showAnswer(e) {
 let ansIndex, i = 1, qType, answer;
 function reload() {
   scrollTo({ behavior: 'smooth', top: 0 });
-  answer = selectFromArr(DATA, 4).result;
-  ansIndex = random(4);
+  answer = selectRandom(DATA);
+  const ansIndex = random(4);
+  console.log(answer, ansIndex);
+
+  const category = getCategory(answer[ansIndex]);
+  const subcategory = getCategory(answer[ansIndex], true);
   
-  const category = CATEGORY.category.find(v => v[0] <= answer[ansIndex][3][0])[1];
-  const subcategory = CATEGORY.subcategory[answer[ansIndex][3][0]];
   q.category.innerText = [category, subcategory].join('  »  ');
   
   q.number0.innerText = 'ITパスポート用語集 問' + i;
@@ -179,6 +181,16 @@ function reload() {
   i++;
 }
 
+function getCategory(a, sub) {
+  if(typeof a == 'number') {
+    return CATEGORY.category[a][1];
+  }
+  if(sub) {
+    return CATEGORY.subcategory[a[3][0]];
+  }
+  return CATEGORY.category.find(v => v[0] <= a[3][0])[1];
+}
+
 function getLink(s) {
   const [, era, year, type, index] = s.match(/^([HR])(\d\d)([HAT])(\d\d?)$/);
   const text = `${{ H: '平成', R: '令和' }[era]}${+year}年${{ H: '春', A: '秋', T: '特別' }[type]} 問${index}`;
@@ -191,18 +203,25 @@ function random(len) {
   return Math.round(Math.random() * (len - 1));
 }
 
-function selectFromArr(arr, count) {
-  arr = [...arr];
+function selectRandom(arr) {
+  const category = getCategory(random(3));
+  const temp = arr.filter(v => {
+    return getCategory(v) == category;
+  });
   const result = [];
-  for(let i = 0; i < count; i++) {
-    result.push(arr.splice(random(arr.length), 1)[0]);
+  for(let i = 0; i < 4; i++) {
+    result.push(temp.splice(random(temp.length), 1)[0]);
   }
-  return { result, arr };
+  return result;
+}
+
+function same(a, b){
+  return a.every((v, i) => v == b[i]);
 }
 
 function setHints(s) {
   const added = [];
-  ABBRE.forEach(v => {
+  WORDS.forEach(v => {
       const inc = added.some(v2 => v2[0].includes(v[0]));
       if(s.includes(v[0]) && !inc) {
           s = s.replaceAll(v[0], `#@${v[0]}#`);
