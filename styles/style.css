@@ -85,6 +85,7 @@ span[title]:not([title=""]) {
 }
 .select > div > span {
   cursor: default;
+  width: 100%;
 }
 .select > div input {
   background-color: #fefefe;
@@ -154,6 +155,8 @@ button:after {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+  width: calc(100% - 24px);
+  position: relative;
 }
 .hideshow span:before {
   content: "選択肢を非表示";
@@ -161,6 +164,9 @@ button:after {
   color: grey;
   text-decoration: underline;
   cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 4px;
 }
 
 body.hideans .hideshow span:before {
@@ -384,4 +390,80 @@ body.hideans .select > div > span {
   height: 5px;
   width: 100%;
   background-color: gold;
+}
+
+.select-1 {
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 30px;
+  display: flex;
+}
+.select-1 label:has(:checked) {
+  color: #ea8a00;
+  font-weight: bold;
+}
+.select-1 label:has(:checked):before {
+  content: "";
+  height: 5px;
+  width: 100%;
+  background-color: #ea8a00;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.select-1 label {
+  color: #808080;
+  padding: 13px 30px;
+  cursor: pointer;
+  position: relative;
+}
+.select-1 label:hover {
+  text-decoration: underline;
+}
+.select-1 label input {
+  display: none;
+}
+
+.select-2 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+.select-2 label {
+  border: 1px solid #cfcfcf;
+  padding: 6px 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.select-2 label input {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  top: -1px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.options {
+  border: 1px solid #cfcfcf;
+  padding: 22px 16px 16px 16px;
+  position: relative;
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+}
+.options:before {
+  content: "オプション項目";
+  position: absolute;
+  font-weight: bold;
+  background-color: white;
+  padding: 0 3px;
+  top: -12px;
+}
+.options label {
+  cursor: pointer;
+}
+.options label input {
+  cursor: pointer;
 }/*# sourceMappingURL=style.css.map */
