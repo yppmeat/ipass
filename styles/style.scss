@@ -7,17 +7,7 @@ html {
   font-family: "IBM Plex Sans JP", sans-serif;
 }
 
-@keyframes uzai {
-  0% {
-    filter: hue-rotate(0deg);
-  }
-  100% {
-    filter: hue-rotate(360deg);
-  }
-}
-
 img {
-  animation: uzai linear 20s infinite;
   height: 100%;
 }
 
@@ -337,7 +327,7 @@ button {
   display: none;
   
   &.show {
-    display: block;
+    display: flex;
   }
   > div {
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
