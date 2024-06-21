@@ -136,7 +136,7 @@ let ansIndex, i = 1, qType, answer;
 function reload() {
   scrollTo({ behavior: 'smooth', top: 0 });
   answer = selectRandom(DATA);
-  const ansIndex = random(4);
+  ansIndex = random(4);
   console.log(answer, ansIndex);
 
   const category = getCategory(answer[ansIndex]);
@@ -238,6 +238,6 @@ function setHints(s) {
 }
 
 function resize() {
-  q.footer.style.width = (app.clientWidth - 24) + 'px';
+  q && (q.footer.style.width = (app.clientWidth - 24) + 'px');
 }
 window.addEventListener('resize', resize);
