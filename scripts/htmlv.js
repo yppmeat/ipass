@@ -44,7 +44,7 @@ function htmlv(string, ...args) {
     }
     return v;
   });
-  string = string.flatMap((v, i) => args[i] ? [v, args[i]] : [v]).join('');
+  string = string.flatMap((v, i) => (args[i] || args[i] == 0) ? [v, args[i]] : [v]).join('');
   
   const doc = new DOMParser().parseFromString(string, 'text/html').body;
   

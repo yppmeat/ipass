@@ -149,3 +149,29 @@ label {
     color: grey;
   }
 }
+
+@media screen and (max-width: 750px) {
+  .test {
+    grid-template-columns: 1fr 1fr;
+    gap: initial;
+    
+    label {
+      padding: 12px 5px;
+      transition: 0.2s background-color;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+  .bunya {
+    grid-template-columns: 1fr;
+    grid-template-rows: initial;
+    margin-bottom: 50px;
+    
+    .subcategory {
+      grid-column: initial !important;
+      grid-row: initial !important;
+    }
+  }
+}

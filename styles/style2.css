@@ -139,4 +139,27 @@ label {
 }
 label:not(:has(:checked)) {
   color: grey;
+}
+
+@media screen and (max-width: 750px) {
+  .test {
+    grid-template-columns: 1fr 1fr;
+    gap: initial;
+  }
+  .test label {
+    padding: 12px 5px;
+    transition: 0.2s background-color;
+  }
+  .test label:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .bunya {
+    grid-template-columns: 1fr;
+    grid-template-rows: initial;
+    margin-bottom: 50px;
+  }
+  .bunya .subcategory {
+    grid-column: initial !important;
+    grid-row: initial !important;
+  }
 }/*# sourceMappingURL=style2.css.map */
