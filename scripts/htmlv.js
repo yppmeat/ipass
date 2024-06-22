@@ -74,7 +74,7 @@ function htmlv(string, ...args) {
     v.removeAttribute('*as');
   });
   
-  const events = 'auxclick,blur,click,compositionend,compositionstart,compositionupdate,contextmenu,copy,cut,dblclick,error,focusin,focusout,focus,fullscreenchange,fullscreenerror,keydown,keypress,keyup,mousedown,mouseenter,mouseleave,mousemove,mouseout,mouseover,mouseup,mousewheel,paste,scroll,select,selectend,selectstart,touchcancel,touchend,touchmove,touchstart'.split(',');
+  const events = 'auxclick,blur,click,compositionend,compositionstart,compositionupdate,contextmenu,copy,cut,dblclick,error,focusin,focusout,focus,change,fullscreenchange,fullscreenerror,keydown,keypress,keyup,mousedown,mouseenter,mouseleave,mousemove,mouseout,mouseover,mouseup,mousewheel,paste,scroll,select,selectend,selectstart,touchcancel,touchend,touchmove,touchstart'.split(',');
   events.forEach(e => {
     if(!string.includes(e)) return;
     doc.querySelectorAll(`[\\*on${e}]`).forEach(v => {

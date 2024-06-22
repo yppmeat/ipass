@@ -7,11 +7,11 @@ const PARAM =
 
 function parseFlag(f) {
   const result = [];
-  Array(22).fill().map((_, i) => {
-    const current = 2 ** (21 - i);
+  Array(23).fill().map((_, i) => {
+    const current = 2 ** (22 - i);
     if(f >= current) {
       f -= current;
-      result.push(21 - i);
+      result.push(22 - i);
     }
   });
   return result;
@@ -37,15 +37,21 @@ let DATA, WORDS, CATEGORY;
 
 let DATAcopy, DATAlength;
 function filterDATA() {
-  const flag = parseFlag(PARAM.q);
-  const range = CATEGORY.testRange.filter((_, i) => {
-    return flag.includes(i);
-  });
+  const flag = parseFlag(+PARAM.q);
+  let range;
+  if(PARAM.type == 'test') {
+    range = CATEGORY.testRange.filter((_, i) => {
+      return flag.includes(i);
+    });
+  }
   if(!DATAcopy) DATAcopy = [...DATA];
   DATA = DATAcopy.filter(v => {
-    return range.some(v2 => {
-      return v2[0] <= v[3][0] && v[3][0] <= v2[1];
-    });
+    if(PARAM.type == 'test') {
+      return range.some(v2 => {
+        return v2[0] <= v[3][0] && v[3][0] <= v2[1];
+      });
+    }
+    return flag.includes(v[3][0]);
   });
   DATAlength = DATA.length;
 }
@@ -259,7 +265,7 @@ function selectRandom() {
   if(!DATA.length) {
     if(PARAM.endless == undefined) {
       location.href = '../home/?log=すべての問題に回答しました';
-      throw 0;
+      throw 1;
     }
     filterDATA();
   }
