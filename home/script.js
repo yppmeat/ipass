@@ -38,7 +38,7 @@ function onClickHandler() {
   const type = getChecked(q.select1)[0].dataset.value;
   const range = sum(getChecked(q.select2).map(v => 2 ** +v.dataset.index));
   const options = getChecked(q.options).map(v => '&' + v.dataset.value);
-  location.href = `/rest/?type=${type}&q=${range}${options.join('')}`;
+  location.href = `../rest/?type=${type}&q=${range}${options.join('')}`;
 }
 
 function getChecked(t) {

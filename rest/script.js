@@ -20,16 +20,16 @@ function parseFlag(f) {
 if(['test', 'bunya'].includes(PARAM.type) && !isNaN(+PARAM.q)) {
   
 } else {
-  location.href = '/home/?log=パラメータの形式が正しくありません';
+  location.href = '../home/?log=パラメータの形式が正しくありません';
   throw 0;
 }
 
 let DATA, WORDS, CATEGORY;
 (async () => {
   const cache = { cache: 'no-cache' };
-  DATA = await (await fetch('/data/data.json', cache)).json();
-  WORDS = await (await fetch('/data/words.json', cache)).json();
-  CATEGORY = await (await fetch('/data/category.json', cache)).json();
+  DATA = await (await fetch('../data/data.json', cache)).json();
+  WORDS = await (await fetch('../data/words.json', cache)).json();
+  CATEGORY = await (await fetch('../data/category.json', cache)).json();
   CATEGORY.category.reverse();
   filterDATA();
   dataLoadedHandler();
@@ -258,7 +258,7 @@ function random(len) {
 function selectRandom() {
   if(!DATA.length) {
     if(PARAM.endless == undefined) {
-      location.href = '/home/?log=すべての問題に回答しました';
+      location.href = '../home/?log=すべての問題に回答しました';
       throw 0;
     }
     filterDATA();
