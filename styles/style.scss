@@ -430,3 +430,10 @@ body.hideans {
     }
   }
 }
+
+@media screen and (max-width: 750px) {
+  .footerBtn {
+    margin-left: -12px;
+    padding-right: 24px;
+  }
+}

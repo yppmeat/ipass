@@ -398,4 +398,11 @@ body.hideans .select > div > span {
   height: 5px;
   width: 100%;
   background-color: gold;
+}
+
+@media screen and (max-width: 750px) {
+  .footerBtn {
+    margin-left: -12px;
+    padding-right: 24px;
+  }
 }/*# sourceMappingURL=style.css.map */
