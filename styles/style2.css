@@ -1,0 +1,91 @@
+@charset "UTF-8";
+.select-1 {
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 30px;
+  display: flex;
+}
+.select-1 label:has(:checked) {
+  color: #ea8a00;
+  font-weight: bold;
+}
+.select-1 label:has(:checked):before {
+  content: "";
+  height: 5px;
+  width: 100%;
+  background-color: #ea8a00;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.select-1 label {
+  color: #808080;
+  padding: 13px 30px;
+  position: relative;
+}
+.select-1 label:hover {
+  text-decoration: underline;
+}
+.select-1 label input {
+  display: none;
+}
+
+.select-2 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+.select-2 label {
+  border: 1px solid #cfcfcf;
+  padding: 6px 5px;
+  display: flex;
+  align-items: center;
+}
+.select-2 label input {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  top: -1px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.options {
+  border: 1px solid #cfcfcf;
+  padding: 22px 16px 16px 16px;
+  position: relative;
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+}
+.options:before {
+  content: "オプション項目";
+  position: absolute;
+  font-weight: bold;
+  background-color: white;
+  padding: 0 3px;
+  top: -12px;
+}
+.options input {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 1px;
+  margin-right: 5px;
+}
+
+.footerBtn {
+  position: initial;
+  bottom: initial;
+  box-shadow: initial;
+}
+.footerBtn button:after {
+  content: "START";
+}
+
+label {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: pointer;
+}/*# sourceMappingURL=style2.css.map */

@@ -1,0 +1,432 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&display=swap');
+
+html {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  font-family: "IBM Plex Sans JP", sans-serif;
+}
+
+img {
+  height: 100%;
+}
+
+::selection {
+  color: rgb(249, 249, 249);
+  background: rgb(235, 127, 32);
+  text-shadow: rgba(0, 0, 0, 0.5) 1px 1px;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: #f0f1f1;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: 750px;
+  max-width: 750px;
+  background-color: white;
+  padding: 12px;
+  padding-bottom: 70px;
+  
+  > span {
+    width: 100%;
+    display: inline-block;
+    text-align: right;
+    color: grey;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+}
+
+h1 {
+  font-size: 19px;
+  border-bottom: 2.5px solid black;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.question {
+  padding: 20px 12px 10px 12px;
+}
+
+span[title]:not([title=""]) {
+  text-decoration: underline dashed rgb(181, 181, 181);
+}
+
+.select, .explain {
+  background-color: #fffeed;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.select {
+  > div {
+    display: flex;
+    width: 100%;
+    padding-right: 32px;
+    gap: 7px;
+    align-items: center;
+
+    &.disabled {
+      opacity: 0.4;
+
+      & span {
+        text-decoration: line-through;
+      }
+    }
+    
+    > span {
+      cursor: default;
+      width: 100%;
+    }
+    
+    input {
+      background-color: #fefefe;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      padding: 8px 16px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: 0.1s box-shadow;
+      margin-right: 3px;
+      user-select: none;
+      
+      &:hover {
+        box-shadow: inset 0px 6px 10px -8px rgb(162, 162, 162);
+      }
+      
+      &:active {
+        box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+        transition: none;
+      }
+    }
+  }
+}
+
+.footerBtn {
+  text-align: center;
+  margin-top: 32px;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  padding: 5px 0;
+  box-shadow: 0px 0px 5px 1px #e9e9e9;
+  width: 750px;
+}
+
+button {
+  width: 220px;
+  height: 44px;
+  font-size: 16px;
+  position: relative;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(#ffbb55, #d27c00);
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s opacity, 0.1s box-shadow;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+    transition: none;
+  }
+  
+  &:after {
+    content: "NEXT";
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: normal;
+    font-size: 90%;
+  }
+}
+
+.hideshow {
+  text-align: end;
+  padding-right: 12px;
+  user-select: none;
+  width: calc(100% - 24px);
+  position: relative;
+
+  span:before {
+    content: '選択肢を非表示';
+    font-size: 13px;
+    color: grey;
+    text-decoration: underline;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 4px;
+  }
+}
+
+body.hideans {
+  .hideshow {
+    span:before {
+      content: '選択肢を表示'
+    }
+  }
+
+  .select {
+    &:hover {
+      > div > span {
+        visibility: visible;
+      }
+    }
+    > div > span {
+      visibility: hidden;
+    }
+  }
+}
+
+.info {
+  padding-left: 12px;
+  
+  .ansList {
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 15px;
+    
+    .ans {
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+    }
+    .ansSelected {
+      color: #b4b4b4;
+      font-size: 14px;
+    }
+  }
+  h3 {
+    margin-left: -12px;
+    &:before {
+      content: "\274F";
+      margin-right: 5px;
+    }
+  }
+  input {
+    padding: 8px 25px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.25s transform, 0.25s box-shadow;
+
+    &:hover {
+      transform: scale(105%);
+      box-shadow: inset 0px 6px 10px -8px rgb(162, 162, 162);
+    }
+  }
+  .kako {
+    a {
+      text-decoration: none;
+      color: #1370c8;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.popup {
+  display: flex;
+  border: 1px solid #d5d5d5;
+  width: min-content;
+  padding: 5px 5px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  gap: 15px;
+  box-shadow: 0 0 0 6px #ececec;
+  position: absolute;
+  left: 100px;
+  background-color: white;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-25px);
+
+  &.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: 1s opacity, 1s transform;
+  }
+  &.ok {
+    .oklogo {
+      background-color: #509ced;
+      &:before {
+        content: 'OK';
+      }
+    }
+    .icon {
+      &:before, &:after {
+        border-radius: 50%;
+      }
+      &:before {
+        background-color: #00da00;
+        width: 30px;
+        height: 30px;
+      }
+      &:after {
+        background-color: white;
+        width: 18px;
+        height: 18px;
+        left: 6px;
+      }
+    }
+    .right {
+      &:before {
+        content: '正解';
+      }
+    }
+  }
+  &.ng {
+    .oklogo {
+      background-color: #e2326b;
+      &:before {
+        content: 'NG';
+      }
+    }
+    .icon {
+      &:before, &:after {
+        background-color: #e2326b;
+        width: 30px;
+        height: 5px;
+      }
+      &:before {
+        transform: rotate(45deg);
+      }
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+    .right {
+      letter-spacing: 3px;
+      margin-right: 7px;
+      &:before {
+        content: '不正解';
+      }
+    }
+  }
+
+  .left {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 30px;
+      width: 30px;
+
+      &:before, &:after {
+        content: '';
+        display: block;
+        position: absolute;
+      }
+    }
+
+    .oklogo {
+      color: white;
+      padding: 0 9px;
+      font-size: 11px;
+      border-radius: 3px;
+      box-shadow: 0px 3px 3px -1px #b1b0b0;
+      position: absolute;
+      top: -19px;
+    }
+  }
+
+  .right {
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    letter-spacing: 10px;
+    position: relative;
+    top: 1px;
+  }
+}
+
+.explain {
+  margin-left: -12px;
+  display: none;
+  
+  &.show {
+    display: flex;
+  }
+  > div {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  }
+  .upper {
+    display: flex;
+    align-items: center;
+    
+    .ans {
+      display: inline-block;
+      background-color: #5d5d5d;
+      color: white;
+      padding: 0 4px;
+      font-size: 12px;
+      border-radius: 3px;
+    }
+    .name {
+      color: grey;
+      font-size: 15px;
+    }
+  }
+  .lower {
+    padding: 12px 0;
+    margin-left: 38px;
+    position: relative;
+    
+    &:after {
+      content: '';
+      width: 15px;
+      height: 15px;
+      display: block;
+      position: absolute;
+      left: -34px;
+      mask: url(../assets/link.svg), no-repeat 50% 50%;
+      bottom: 17px;
+      background-color: grey;
+      cursor: pointer;
+    }
+    .correct {
+      font-weight: bold;
+      position: relative;
+      
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 1px;
+        height: 5px;
+        width: 100%;
+        background-color: gold;
+      }
+    }
+  }
+}

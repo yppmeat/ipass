@@ -1,0 +1,95 @@
+.select-1 {
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 30px;
+  display: flex;
+
+  label:has(:checked) {
+    color: #ea8a00;
+    font-weight: bold;
+
+    &:before {
+      content: '';
+      height: 5px;
+      width: 100%;
+      background-color: #ea8a00;
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+  label {
+    color: #808080;
+    padding: 13px 30px;
+    position: relative;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+    input {
+      display: none;
+    }
+  }
+}
+
+.select-2 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+
+  label {
+    border: 1px solid #cfcfcf;
+    padding: 6px 5px;
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 15px;
+      height: 15px;
+      position: relative;
+      top: -1px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  }
+}
+
+.options {
+  border: 1px solid #cfcfcf;
+  padding: 22px 16px 16px 16px;
+  position: relative;
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+  
+  &:before {
+    content: 'オプション項目';
+    position: absolute;
+    font-weight: bold;
+    background-color: white;
+    padding: 0 3px;
+    top: -12px;
+  }
+  input {
+    width: 14px;
+    height: 14px;
+    position: relative;
+    top: 1px;
+    margin-right: 5px;
+  }
+}
+
+.footerBtn {
+  position: initial;
+  bottom: initial;
+  box-shadow: initial;
+  
+  button:after {
+    content: 'START';
+  }
+}
+
+label {
+  user-select: none;
+  cursor: pointer;
+}
