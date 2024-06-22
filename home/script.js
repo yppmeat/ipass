@@ -58,7 +58,9 @@ function dataLoadedHandler() {
       </label>
     </div>
     <div class="footerBtn">
-      <button *onclick=${onClickHandler}>出題開始</button>
+      <div>
+        <button *onclick=${onClickHandler}>出題開始</button>
+      </div>
     </div>
   `;
   document.getElementById('app').append(...q);

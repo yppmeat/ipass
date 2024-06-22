@@ -140,7 +140,13 @@ function dataLoadedHandler() {
       </div>
     </div>
     <div class="footerBtn" *as="footer">
-      <button *onclick=${onClickHandler}>次の問題</button>
+      <div></div>
+      <div>
+        <button *onclick=${onClickHandler}>次の問題</button>
+      </div>
+      <div>
+        <span *onclick=${finish}></span>
+      </div>
     </div>
   `;
   app.append(...q);
@@ -152,6 +158,10 @@ let hidden = false;
 function hideshow() {
   document.body.classList.toggle('hideans');
   hidden = !hidden;
+}
+
+function finish() {
+  location.href = '../home/?log=終了しました';
 }
 
 function linkClick(e) {
