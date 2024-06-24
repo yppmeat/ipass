@@ -86,6 +86,9 @@ function dataLoadedHandler() {
       </div>
     </div>
     <div class="hideshow"><span *onclick=${hideshow}></span></div>
+    <div class="memo">
+      <textarea placeholder="メモ欄" *as="memo"></textarea>
+    </div>
     <div class="info">
       <div>
         <h3>分類</h3>
@@ -214,7 +217,7 @@ function reload() {
   q.number1.innerText = '問' + i;
   q.current.innerText = i + '問目 / 選択範囲の問題数' + DATAlength + '問';
   
-  qType = random(2);
+  qType = PARAM.normal != undefined ? 1 : random(2);
   if(qType) {
     q.question.innerHTML = setHints(sanitize(answer[ansIndex][0])) + 'についての説明はどれか。';
   } else {
@@ -236,6 +239,7 @@ function reload() {
   q.ansBtn.style.display = 'block';
   q.correct.innerText = '';
   q.ansSelected.innerText = '';
+  q.memo.value = '';
   
   const kako = answer[ansIndex][2];
   if(!kako.length) {

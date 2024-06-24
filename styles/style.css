@@ -115,6 +115,20 @@ span[title]:not([title=""]) {
   transition: none;
 }
 
+.memo {
+  margin-top: 32px;
+  text-align: center;
+  display: none;
+}
+.memo textarea {
+  width: 80%;
+  max-width: 400px;
+  height: 184px;
+  resize: vertical;
+  min-height: 15px;
+  max-height: 45px;
+}
+
 .footerBtn {
   display: flex;
   justify-content: space-between;
@@ -201,6 +215,9 @@ body.hideans .select:hover > div > span {
 }
 body.hideans .select > div > span {
   visibility: hidden;
+}
+body.hideans .memo {
+  display: block;
 }
 
 .info {

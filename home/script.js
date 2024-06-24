@@ -56,6 +56,9 @@ function dataLoadedHandler() {
       <label>
         <input type="checkbox" data-value="random" checked>問題をランダムに出題する
       </label>
+      <label>
+        <input type="checkbox" data-value="normal">用語→説明の形式で出題する
+      </label>
     </div>
     <div class="footerBtn">
       <div>
