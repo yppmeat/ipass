@@ -123,10 +123,9 @@ span[title]:not([title=""]) {
 .memo textarea {
   width: 80%;
   max-width: 400px;
-  height: 184px;
+  height: 45px;
   resize: vertical;
   min-height: 15px;
-  max-height: 45px;
 }
 
 .footerBtn {
@@ -145,6 +144,7 @@ span[title]:not([title=""]) {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 50px;
 }
 .footerBtn div span {
   color: grey;
@@ -156,35 +156,44 @@ span[title]:not([title=""]) {
 .footerBtn div span:before {
   content: "終了する";
 }
-.footerBtn div button {
+.footerBtn div .start, .footerBtn div .missed, .footerBtn div .next {
   width: 220px;
   height: 44px;
   font-size: 16px;
   position: relative;
   color: white;
   font-weight: bold;
-  background: linear-gradient(#ffbb55, #d27c00);
+  background: #ffa837;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: 0.2s opacity, 0.1s box-shadow;
 }
-.footerBtn div button:hover {
+.footerBtn div .start:hover, .footerBtn div .missed:hover, .footerBtn div .next:hover {
   opacity: 0.8;
 }
-.footerBtn div button:active {
+.footerBtn div .start:active, .footerBtn div .missed:active, .footerBtn div .next:active {
   box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
   transition: none;
 }
-.footerBtn div button:after {
-  content: "NEXT";
+.footerBtn div .start:after, .footerBtn div .missed:after, .footerBtn div .next:after {
+  content: "START";
   position: absolute;
   bottom: 3px;
   right: 3px;
   color: rgba(255, 255, 255, 0.4);
   font-weight: normal;
   font-size: 90%;
+}
+.footerBtn div .missed {
+  background-color: #ff906e;
+}
+.footerBtn div .missed:after {
+  content: "MISSED";
+}
+.footerBtn div .next:after {
+  content: "NEXT";
 }
 
 .hideshow {
@@ -435,8 +444,8 @@ body.hideans .memo {
 
 @media screen and (max-width: 750px) {
   .footerBtn {
+    margin-right: -12px;
     margin-left: -12px;
-    padding-right: 24px;
   }
   .footerBtn div:last-child {
     margin-right: -24px;

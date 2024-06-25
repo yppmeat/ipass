@@ -1,3 +1,10 @@
+const PARAM =
+  location.search.slice(1).split('&').reduce((a, b) => {
+    const [key, ...value] = b.split('=');
+    a[key] = decodeURIComponent(value.join('='));
+    return a;
+  }, {});
+
 let CATEGORY;
 (async () => {
   CATEGORY = await (await fetch('../data/category.json')).json();
@@ -62,7 +69,14 @@ function dataLoadedHandler() {
     </div>
     <div class="footerBtn">
       <div>
-        <button *onclick=${onClickHandler}>出題開始</button>
+        ${
+          PARAM.missed != undefined ?
+            htmlv/* html */`
+              <button class="missed" *onclick=${missedButton}>ミスだけ出題</button>
+            `
+            : ''
+        }
+        <button class="start" *onclick=${startButton}>出題開始</button>
       </div>
     </div>
   `;
@@ -90,7 +104,11 @@ function dataLoadedHandler() {
     e.currentTarget.querySelector(':scope :first-child input').checked = checked;
   }
   
-  function onClickHandler() {
+  function missedButton() {
+    location.href = '../rest/?missed';
+  }
+
+  function startButton() {
     const type = getChecked(q.type)[0].dataset.value;
     const range = sum(getChecked(q[type], type == 'bunya').map(v => 2 ** +v.dataset.index));
     const options = getChecked(q.options).map(v => '&' + v.dataset.value);

@@ -17,7 +17,7 @@ function parseFlag(f) {
   return result;
 }
 
-if(['test', 'bunya'].includes(PARAM.type) && !isNaN(+PARAM.q)) {
+if((['test', 'bunya'].includes(PARAM.type) && !isNaN(+PARAM.q)) || PARAM.missed != undefined) {
   
 } else {
   location.href = '../home/?log=パラメータの形式が正しくありません';
@@ -37,22 +37,32 @@ let DATA, WORDS, CATEGORY;
 
 let DATAcopy, DATAlength;
 function filterDATA() {
-  const flag = parseFlag(+PARAM.q);
-  let range;
-  if(PARAM.type == 'test') {
-    range = CATEGORY.testRange.filter((_, i) => {
-      return flag.includes(i);
+  if(PARAM.missed != undefined) {
+    if(!DATAcopy) DATAcopy = [...DATA];
+    const missed = localStorage.getItem('missed').split(',').map(Number);
+    console.log(missed);
+    DATA = DATAcopy.filter(v => {
+      return missed.includes(v[0]);
     });
-  }
-  if(!DATAcopy) DATAcopy = [...DATA];
-  DATA = DATAcopy.filter(v => {
+    console.log(DATA);
+  } else {
+    const flag = parseFlag(+PARAM.q);
+    let range;
     if(PARAM.type == 'test') {
-      return range.some(v2 => {
-        return v2[0] <= v[3][0] && v[3][0] <= v2[1];
+      range = CATEGORY.testRange.filter((_, i) => {
+        return flag.includes(i);
       });
     }
-    return flag.includes(v[3][0]);
-  });
+    if(!DATAcopy) DATAcopy = [...DATA];
+    DATA = DATAcopy.filter(v => {
+      if(PARAM.type == 'test') {
+        return range.some(v2 => {
+          return v2[0] <= v[4][0] && v[4][0] <= v2[1];
+        });
+      }
+      return flag.includes(v[4][0]);
+    });
+  }
   DATAlength = DATA.length;
 }
 
@@ -145,7 +155,7 @@ function dataLoadedHandler() {
     <div class="footerBtn" *as="footer">
       <div></div>
       <div>
-        <button *onclick=${onClickHandler}>次の問題</button>
+        <button class="next" *onclick=${onClickHandler}>次の問題</button>
       </div>
       <div>
         <span *onclick=${finish}></span>
@@ -157,6 +167,7 @@ function dataLoadedHandler() {
   reload();
   resize();
 }
+const missed = [];
 let hidden = false;
 function hideshow() {
   document.body.classList.toggle('hideans');
@@ -183,6 +194,10 @@ function ansClick(e) {
   q.ansSelected.innerText = '“あなたの回答：' + e.target.value + '”';
   q.popup.classList.add('show');
   const correct = +e.target.dataset.index == ansIndex;
+  if(correct) {
+    correct = true;
+  }
+  answered = true;
   q.popup.classList.remove('ok', 'ng');
   q.popup.classList.add(correct ? 'ok' : 'ng');
   clearTimeout(ansShowId);
@@ -202,8 +217,16 @@ function showAnswer(e) {
   });
 }
 
-let ansIndex, i = 1, qType, answer;
+let ansIndex, i = 1, qType, answer, correct = false, answered = false;
 function reload() {
+  if(answered && !correct) {
+    if(!missed.includes(answer[ansIndex][0])) {
+      missed.push(answer[ansIndex][0]);
+    }
+    answered = false;
+    correct = false;
+  }
+
   scrollTo({ behavior: 'smooth', top: 0 });
   [answer, ansIndex] = selectRandom();
   console.log(answer, ansIndex);
@@ -211,7 +234,7 @@ function reload() {
   const category = getCategory(answer[ansIndex]);
   const subcategory = getCategory(answer[ansIndex], true);
   
-  q.category.innerText = [category, subcategory].join('  »  ') + ' No.' + answer[ansIndex][3][1];
+  q.category.innerText = [category, subcategory].join('  »  ') + ' No.' + answer[ansIndex][4][1];
   
   q.number0.innerText = 'ITパスポート用語集 問' + i;
   q.number1.innerText = '問' + i;
@@ -219,18 +242,18 @@ function reload() {
   
   qType = PARAM.normal != undefined ? 1 : random(2);
   if(qType) {
-    q.question.innerHTML = setHints(sanitize(answer[ansIndex][0])) + 'についての説明はどれか。';
+    q.question.innerHTML = setHints(sanitize(answer[ansIndex][1])) + 'についての説明はどれか。';
   } else {
-    q.question.innerHTML = '以下の説明に合致する用語はどれか。<br>' + setHints(sanitize(answer[ansIndex][1]));
+    q.question.innerHTML = '以下の説明に合致する用語はどれか。<br>' + setHints(sanitize(answer[ansIndex][2]));
   }
   answer.forEach((v, i) => {
-    const temp = setHints(sanitize(v[qType]));
+    const temp = setHints(sanitize(v[qType + 1]));
     q.ans[i].innerHTML = temp;
     q.ans[i].parentElement.classList.remove('disabled');
     
     q.title[i].innerHTML = '“' + temp + '”';
     const correct = '<span class="correct">正しい</span>。';
-    q.desc[i].innerHTML = (i == ansIndex ? correct : '') + setHints(sanitize(v[+!qType])) + (qType ? 'についての説明です。' : '');
+    q.desc[i].innerHTML = (i == ansIndex ? correct : '') + setHints(sanitize(v[+!qType + 1])) + (qType ? 'についての説明です。' : '');
   });
 
   document.body.classList.toggle('hideans', hidden)
@@ -241,7 +264,7 @@ function reload() {
   q.ansSelected.innerText = '';
   q.memo.value = '';
   
-  const kako = answer[ansIndex][2];
+  const kako = answer[ansIndex][3];
   if(!kako.length) {
     q.kako.innerText = '出題歴がありません';
   } else {
@@ -258,9 +281,9 @@ function getCategory(a, sub) {
     return CATEGORY.category[a][1];
   }
   if(sub) {
-    return CATEGORY.subcategory[a[3][0]];
+    return CATEGORY.subcategory[a[4][0]];
   }
-  return CATEGORY.category.find(v => v[0] <= a[3][0])[1];
+  return CATEGORY.category.find(v => v[0] <= a[4][0])[1];
 }
 
 function getLink(s) {
@@ -278,7 +301,8 @@ function random(len) {
 function selectRandom() {
   if(!DATA.length) {
     if(PARAM.endless == undefined) {
-      location.href = '../home/?log=すべての問題に回答しました';
+      localStorage.setItem('missed', missed.join(','));
+      location.href = '../home/?log=すべての問題に回答しました' + (missed.length ? '&missed' : '');
       throw 1;
     }
     filterDATA();
@@ -286,7 +310,7 @@ function selectRandom() {
   const ans = DATA.splice(PARAM.random == undefined ? 0 : random(DATA.length), 1)[0];
   const category = getCategory(ans);
   const temp = DATAcopy.filter(v => {
-    return getCategory(v) == category;
+    return getCategory(v) == category && ans[0] != v[0];
   });
   const result = [];
   for(let i = 0; i < 3; i++) {
