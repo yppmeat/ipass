@@ -193,10 +193,7 @@ let ansShowId;
 function ansClick(e) {
   q.ansSelected.innerText = '“あなたの回答：' + e.target.value + '”';
   q.popup.classList.add('show');
-  const correct = +e.target.dataset.index == ansIndex;
-  if(correct) {
-    correct = true;
-  }
+  correct = +e.target.dataset.index == ansIndex;
   answered = true;
   q.popup.classList.remove('ok', 'ng');
   q.popup.classList.add(correct ? 'ok' : 'ng');
@@ -219,7 +216,7 @@ function showAnswer(e) {
 
 let ansIndex, i = 1, qType, answer, correct = false, answered = false;
 function reload() {
-  if(answered && !correct) {
+  if(!correct || !answered) {
     if(!missed.includes(answer[ansIndex][0])) {
       missed.push(answer[ansIndex][0]);
     }
