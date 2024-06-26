@@ -181,7 +181,7 @@ function finish() {
 function linkClick(e) {
   if(e.clientX < e.target.getBoundingClientRect().left) {
     const isEdg = navigator.userAgent.includes('Edg');
-    window.open(`https://www.${isEdg ? 'bing' : 'google'}.com/search?q=${encodeURIConponent(answer[e.target.dataset.index][1])}とは+IT`, '_blank');
+    window.open(`https://www.${isEdg ? 'bing' : 'google'}.com/search?q=${encodeURIComponent(answer[e.target.dataset.index][1])}とは+IT`, '_blank');
   }
 }
 
