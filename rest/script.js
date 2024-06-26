@@ -285,8 +285,8 @@ function getCategory(a, sub) {
 
 function getLink(s) {
   const [, era, year, type, index] = s.match(/^([HR])(\d\d)([HAT])(\d\d?)$/);
-  const text = `${{ H: '平成', R: '令和' }[era]}${+year}年${{ H: '春', A: '秋', T: '特別' }[type]} 問${index}`;
-  const dir = `${year}_${{ H: 'haru', A: 'aki', T: 'toku' }[type]}/q${index}.html`;
+  const text = `${{ H: '平成', R: '令和' }[era]}${+year}年${{ H: '春', A: '秋', T: '特別' }[type]} 問${+index}`;
+  const dir = `${year}_${{ H: 'haru', A: 'aki', T: 'toku' }[type]}/q${+index}.html`;
   const bassURL = 'https://www.itpassportsiken.com/kakomon/';
   return `<a href="${bassURL}${dir}" target="_blank">${text}</a>`;
 }
