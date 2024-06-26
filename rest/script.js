@@ -217,7 +217,7 @@ function showAnswer(e) {
 let ansIndex, i = 1, qType, answer, correct = false, answered = false;
 function reload() {
   if(!correct || !answered) {
-    if(!missed.includes(answer[ansIndex][0])) {
+    if(answer && !missed.includes(answer[ansIndex][0])) {
       missed.push(answer[ansIndex][0]);
     }
     answered = false;
