@@ -5,6 +5,10 @@ const PARAM =
     return a;
   }, {});
 
+if(!localStorage.getItem('mark')) {
+  localStorage.setItem('mark', '0'.repeat(375));
+}
+
 function parseFlag(f) {
   const result = [];
   Array(23).fill().map((_, i) => {
@@ -153,7 +157,12 @@ function dataLoadedHandler() {
       </div>
     </div>
     <div class="footerBtn" *as="footer">
-      <div></div>
+      <div class="mark">
+        <label>
+          <input type="checkbox" *onclick=${mark}>
+          マークする
+        </label>
+      </div>
       <div>
         <button class="next" *onclick=${onClickHandler}>次の問題</button>
       </div>
@@ -172,6 +181,17 @@ let hidden = false;
 function hideshow() {
   document.body.classList.toggle('hideans');
   hidden = !hidden;
+}
+
+function mark() {
+  ansIndex
+}
+
+function setMark(id, on) {
+  let temp = localStorage.getItem('mark');
+  let s1 = temp.slice(0, id);
+  let s2 = temp.slice(id + 1, -1);
+  localStorage.setItem('mark', s1 + +on + s2)
 }
 
 function finish() {
@@ -193,7 +213,10 @@ let ansShowId;
 function ansClick(e) {
   q.ansSelected.innerText = '“あなたの回答：' + e.target.value + '”';
   q.popup.classList.add('show');
-  correct = +e.target.dataset.index == ansIndex;
+  const correct = +e.target.dataset.index == ansIndex;
+  if(correct) {
+    correct = true;
+  }
   answered = true;
   q.popup.classList.remove('ok', 'ng');
   q.popup.classList.add(correct ? 'ok' : 'ng');
@@ -214,9 +237,9 @@ function showAnswer(e) {
   });
 }
 
-let ansIndex, i = 1, qType, answer, correct = false, answered = false;
+let ansIndex, i = 1, qType, answer, correct = false, answered = false, currentId;
 function reload() {
-  if(!correct || !answered) {
+  if(answered && !correct) {
     if(answer && !missed.includes(answer[ansIndex][0])) {
       missed.push(answer[ansIndex][0]);
     }
@@ -226,6 +249,7 @@ function reload() {
 
   scrollTo({ behavior: 'smooth', top: 0 });
   [answer, ansIndex] = selectRandom();
+  currentId = answer[ansIndex][0];
   console.log(answer, ansIndex);
 
   const category = getCategory(answer[ansIndex]);

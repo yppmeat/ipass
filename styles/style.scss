@@ -129,6 +129,7 @@ span[title]:not([title=""]) {
 }
 
 .footerBtn {
+  user-select: none;
   display: flex;
   justify-content: space-between;
   margin-top: 32px;
@@ -205,6 +206,21 @@ span[title]:not([title=""]) {
       }
     }
   }
+
+  .mark {
+    label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      input {
+        accent-color: #ff4848;
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
 }
 
 .hideshow {
@@ -270,6 +286,7 @@ body.hideans {
   }
   h3 {
     margin-left: -12px;
+    user-select: none;
     &:before {
       content: "\274F";
       margin-right: 5px;

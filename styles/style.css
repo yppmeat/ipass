@@ -129,6 +129,9 @@ span[title]:not([title=""]) {
 }
 
 .footerBtn {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   display: flex;
   justify-content: space-between;
   margin-top: 32px;
@@ -195,6 +198,17 @@ span[title]:not([title=""]) {
 .footerBtn div .next:after {
   content: "NEXT";
 }
+.footerBtn .mark label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.footerBtn .mark label input {
+  accent-color: #ff4848;
+  width: 14px;
+  height: 14px;
+}
 
 .hideshow {
   text-align: end;
@@ -249,6 +263,9 @@ body.hideans .memo {
 }
 .info h3 {
   margin-left: -12px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .info h3:before {
   content: "❏";
