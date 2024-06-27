@@ -213,10 +213,7 @@ let ansShowId;
 function ansClick(e) {
   q.ansSelected.innerText = '“あなたの回答：' + e.target.value + '”';
   q.popup.classList.add('show');
-  const correct = +e.target.dataset.index == ansIndex;
-  if(correct) {
-    correct = true;
-  }
+  correct = +e.target.dataset.index == ansIndex;
   answered = true;
   q.popup.classList.remove('ok', 'ng');
   q.popup.classList.add(correct ? 'ok' : 'ng');
