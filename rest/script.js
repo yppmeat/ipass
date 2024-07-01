@@ -5,9 +5,12 @@ const PARAM =
     return a;
   }, {});
 
+let marklist;
 if(!localStorage.getItem('mark')) {
   localStorage.setItem('mark', '0'.repeat(375));
 }
+marklist = localStorage.getItem('mark').split('');
+console.log(marklist);
 
 function parseFlag(f) {
   const result = [];
@@ -67,15 +70,15 @@ function filterDATA() {
       return flag.includes(v[4][0]);
     });
   }
+  DATA = DATA.filter(v => {
+    return marklist[v[0]] == '0';
+  });
   DATAlength = DATA.length;
 }
 
 
 let q;
 function dataLoadedHandler() {
-  function onClickHandler() {
-    reload();
-  }
   q = htmlv/* html */`
     <h1 *as="number0"></h1>
     <h2 *as="number1"></h2>
@@ -159,12 +162,12 @@ function dataLoadedHandler() {
     <div class="footerBtn" *as="footer">
       <div class="mark">
         <label>
-          <input type="checkbox" *onclick=${mark}>
+          <input type="checkbox" *as="mark" *onclick=${mark}>
           マークする
         </label>
       </div>
       <div>
-        <button class="next" *onclick=${onClickHandler}>次の問題</button>
+        <button class="next" *onclick=${reload}>次の問題</button>
       </div>
       <div>
         <span *onclick=${finish}></span>
@@ -183,15 +186,22 @@ function hideshow() {
   hidden = !hidden;
 }
 
-function mark() {
-  ansIndex
+function mark(e) {
+  if(localStorage.getItem('marked') == undefined) {
+    alert('マークしました。この問題は今後出題されません。トップページから解除することができます。');
+    localStorage.setItem('marked', 'marked');
+  }
+  console.log(currentId, q.mark.checked);
+  setMark(currentId, q.mark.checked);
 }
 
 function setMark(id, on) {
   let temp = localStorage.getItem('mark');
   let s1 = temp.slice(0, id);
   let s2 = temp.slice(id + 1, -1);
-  localStorage.setItem('mark', s1 + +on + s2)
+  localStorage.setItem('mark', s1 + +on + s2);
+  marklist = localStorage.getItem('mark').split('');
+  console.log(marklist);
 }
 
 function finish() {
@@ -281,6 +291,7 @@ function reload() {
   q.correct.innerText = '';
   q.ansSelected.innerText = '';
   q.memo.value = '';
+  q.mark.checked = marklist[currentId] == '1' ? true : false;
   
   const kako = answer[ansIndex][3];
   if(!kako.length) {

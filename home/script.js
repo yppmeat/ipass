@@ -5,9 +5,11 @@ const PARAM =
     return a;
   }, {});
 
-let CATEGORY;
+let DATA, CATEGORY;
 (async () => {
-  CATEGORY = await (await fetch('../data/category.json')).json();
+  const cache = { cache: 'no-cache' };
+  DATA = await (await fetch('../data/data.json', cache)).json();
+  CATEGORY = await (await fetch('../data/category.json', cache)).json();
   dataLoadedHandler();
 })();
 
@@ -37,6 +39,18 @@ function dataLoadedHandler() {
           `;
         })}
       </div>
+    `;
+  });
+  const marklist = DATA.map(v => {
+    return htmlv/* html */`
+      <tr>
+        <td>
+          <input type="checkbox" checked>
+        </td>
+        <td>
+          ${v[1]}
+        </td>
+      </tr>
     `;
   });
   const q = htmlv/* html */`
@@ -78,6 +92,19 @@ function dataLoadedHandler() {
         }
         <button class="start" *onclick=${startButton}>出題開始</button>
       </div>
+    </div>
+    <div class="marklist">
+      <table>
+        <thead>
+          <th>
+            <td>マーク</td>
+            <td>用語</td>
+          </th>
+        </thead>
+        <tbody *as="marklist">
+          ${marklist}
+        </tbody>
+      </table>
     </div>
   `;
   document.getElementById('app').append(...q);
