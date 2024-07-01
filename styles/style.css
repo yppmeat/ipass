@@ -7,6 +7,10 @@ html {
   font-family: "IBM Plex Sans JP", sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 img {
   height: 100%;
 }

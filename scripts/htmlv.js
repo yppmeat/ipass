@@ -46,7 +46,9 @@ function htmlv(string, ...args) {
   });
   string = string.flatMap((v, i) => (args[i] || args[i] == 0) ? [v, args[i]] : [v]).join('');
   
-  const doc = new DOMParser().parseFromString(string, 'text/html').body;
+  const template = document.createElement('template');
+  template.innerHTML = string;
+  const doc = template.content;
   
   const variables = {};
   doc.querySelectorAll('[\\*as]').forEach(v => {

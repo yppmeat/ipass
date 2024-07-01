@@ -5,6 +5,10 @@ const PARAM =
     return a;
   }, {});
 
+if(!localStorage.getItem('mark')) {
+  localStorage.setItem('mark', '0'.repeat(375));
+}
+
 let DATA, CATEGORY;
 (async () => {
   const cache = { cache: 'no-cache' };
@@ -41,11 +45,16 @@ function dataLoadedHandler() {
       </div>
     `;
   });
-  const marklist = DATA.map(v => {
-    return htmlv/* html */`
+  const mark = localStorage.getItem('mark').split('');
+  const marklist = DATA.filter(v => {
+    return mark[v[0]] == '1';
+  }).map(v => {
+    return `
       <tr>
         <td>
-          <input type="checkbox" checked>
+          <label>
+            <input type="checkbox" checked>
+          </label>
         </td>
         <td>
           ${v[1]}
@@ -93,18 +102,22 @@ function dataLoadedHandler() {
         <button class="start" *onclick=${startButton}>出題開始</button>
       </div>
     </div>
-    <div class="marklist">
-      <table>
-        <thead>
-          <th>
-            <td>マーク</td>
-            <td>用語</td>
-          </th>
-        </thead>
-        <tbody *as="marklist">
-          ${marklist}
-        </tbody>
-      </table>
+    <span class="showmark">マークを管理</span>
+    <div class="marklist" style=${{ display: 'none' }}>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>マーク</th>
+              <th style=${{ width: 300 }}>用語</th>
+            </tr>
+          </thead>
+          <tbody *as="marklist">
+            ${marklist}
+          </tbody>
+        </table>
+        <div>何もマークしていません</div>
+      </div>
     </div>
   `;
   document.getElementById('app').append(...q);
