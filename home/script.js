@@ -102,8 +102,8 @@ function dataLoadedHandler() {
         <button class="start" *onclick=${startButton}>出題開始</button>
       </div>
     </div>
-    <span class="showmark">マークを管理</span>
-    <div class="marklist" style=${{ display: 'none' }}>
+    <span class="showmark" *onclick=${showmark}>マークを管理</span>
+    <div class="marklist" style=${{ display: 'none' }} *as="marklist">
       <div>
         <table>
           <thead>
@@ -112,7 +112,7 @@ function dataLoadedHandler() {
               <th style=${{ width: 300 }}>用語</th>
             </tr>
           </thead>
-          <tbody *as="marklist">
+          <tbody>
             ${marklist}
           </tbody>
         </table>
@@ -122,6 +122,10 @@ function dataLoadedHandler() {
   `;
   document.getElementById('app').append(...q);
 
+  function showmark() {
+    q.marklist.style.display = 'block';
+  }
+  
   function typeChange() {
     const type = ['test', 'bunya'];
     const index = type.indexOf(getChecked(q.type)[0].dataset.value);
