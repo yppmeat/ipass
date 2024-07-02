@@ -220,7 +220,6 @@ function ansClick(e) {
   q.ansSelected.innerText = '“あなたの回答：' + e.target.value + '”';
   q.popup.classList.add('show');
   correct = +e.target.dataset.index == ansIndex;
-  answered = true;
   q.popup.classList.remove('ok', 'ng');
   q.popup.classList.add(correct ? 'ok' : 'ng');
   clearTimeout(ansShowId);
@@ -240,20 +239,19 @@ function showAnswer(e) {
   });
 }
 
-let ansIndex, i = 1, qType, answer, correct = false, answered = false, currentId;
+let ansIndex, i = 1, qType, answer, correct = false, currentId;
 function reload() {
-  if(answered && !correct) {
-    if(answer && !missed.includes(answer[ansIndex][0])) {
-      missed.push(answer[ansIndex][0]);
+  if(!correct && answer) {
+    if(!missed.includes(currentId)) {
+      missed.push(currentId);
+      console.log(missed);
     }
-    answered = false;
     correct = false;
   }
 
   scrollTo({ behavior: 'smooth', top: 0 });
   [answer, ansIndex] = selectRandom();
   currentId = answer[ansIndex][0];
-  console.log(answer, ansIndex);
 
   const category = getCategory(answer[ansIndex]);
   const subcategory = getCategory(answer[ansIndex], true);
