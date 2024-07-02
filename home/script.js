@@ -116,7 +116,7 @@ function dataLoadedHandler() {
             ${marktable}
           </tbody>
         </table>
-        <div>何もマークしていません</div>
+        <div>何もマークしていません<br>マークすると問題を非表示にすることができます</div>
       </div>
     </div>
   `;

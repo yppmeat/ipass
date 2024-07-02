@@ -193,6 +193,7 @@ label {
     }
     table:not(:has(tbody tr)) + div {
       display: block;
+      text-align: center;
     }
   }
   

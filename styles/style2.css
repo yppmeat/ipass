@@ -182,6 +182,7 @@ label:not(:has(:checked)) {
 }
 .marklist > div table:not(:has(tbody tr)) + div {
   display: block;
+  text-align: center;
 }
 .marklist table {
   border-collapse: collapse;
