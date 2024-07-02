@@ -5,11 +5,10 @@ const PARAM =
     return a;
   }, {});
 
-let marklist;
 if(!localStorage.getItem('mark')) {
   localStorage.setItem('mark', '0'.repeat(375));
 }
-marklist = localStorage.getItem('mark').split('');
+let marklist = localStorage.getItem('mark').split('');
 console.log(marklist);
 
 function parseFlag(f) {
@@ -186,7 +185,7 @@ function hideshow() {
   hidden = !hidden;
 }
 
-function mark(e) {
+function mark() {
   if(localStorage.getItem('marked') == undefined) {
     alert('マークしました。この問題は今後出題されません。トップページから解除することができます。');
     localStorage.setItem('marked', 'marked');
@@ -196,11 +195,8 @@ function mark(e) {
 }
 
 function setMark(id, on) {
-  let temp = localStorage.getItem('mark');
-  let s1 = temp.slice(0, id);
-  let s2 = temp.slice(id + 1, -1);
-  localStorage.setItem('mark', s1 + +on + s2);
-  marklist = localStorage.getItem('mark').split('');
+  marklist[id] = on ? '1' : '0';
+  localStorage.setItem('mark', marklist.join(''));
   console.log(marklist);
 }
 

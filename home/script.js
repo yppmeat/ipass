@@ -8,6 +8,7 @@ const PARAM =
 if(!localStorage.getItem('mark')) {
   localStorage.setItem('mark', '0'.repeat(375));
 }
+let marklist = localStorage.getItem('mark').split('');
 
 let DATA, CATEGORY;
 (async () => {
@@ -45,15 +46,14 @@ function dataLoadedHandler() {
       </div>
     `;
   });
-  const mark = localStorage.getItem('mark').split('');
-  const marklist = DATA.filter(v => {
-    return mark[v[0]] == '1';
+  const marktable = DATA.filter(v => {
+    return marklist[v[0]] == '1';
   }).map(v => {
-    return `
+    return htmlv/* html */`
       <tr>
         <td>
           <label>
-            <input type="checkbox" checked>
+            <input type="checkbox" checked data-index="${v[0]}" *onclick=${mark}>
           </label>
         </td>
         <td>
@@ -103,17 +103,17 @@ function dataLoadedHandler() {
       </div>
     </div>
     <span class="showmark" *onclick=${showmark}>マークを管理</span>
-    <div class="marklist" style=${{ display: 'none' }} *as="marklist">
+    <div class="marklist" style=${{ display: 'none' }} *as="marklist" *onclick=${close}>
       <div>
         <table>
           <thead>
             <tr>
-              <th>マーク</th>
+              <th style=${{ width: 60 }}>マーク</th>
               <th style=${{ width: 300 }}>用語</th>
             </tr>
           </thead>
           <tbody>
-            ${marklist}
+            ${marktable}
           </tbody>
         </table>
         <div>何もマークしていません</div>
@@ -122,8 +122,24 @@ function dataLoadedHandler() {
   `;
   document.getElementById('app').append(...q);
 
+  function close(e) {
+    if(e.target == e.currentTarget) {
+      q.marklist.style.display = 'none';
+    }
+  }
+
+  function mark(e) {
+    setMark(e.target.dataset.index, e.target.checked);
+  }
+
+  function setMark(id, on) {
+    marklist[id] = on ? '1' : '0';
+    localStorage.setItem('mark', marklist.join(''));
+    console.log(marklist);
+  }
+
   function showmark() {
-    q.marklist.style.display = 'block';
+    q.marklist.style.display = 'flex';
   }
   
   function typeChange() {

@@ -19,7 +19,7 @@ function htmlv(string, ...args) {
       if(v[0] instanceof HTMLVElement) {
         v = v.map(e => {
           temp[i] = e;
-          return `<use *v="${i++}"></use>`;
+          return `<template *v="${i++}"></template>`;
         });
       }
       return v.join('');
@@ -29,7 +29,7 @@ function htmlv(string, ...args) {
     }
     if(v instanceof HTMLVElement) {
       temp[i] = v;
-      return `<use *v="${i++}"></use>`;
+      return `<template *v="${i++}"></template>`;
     }
     if(v instanceof Function) {
       temp[i] = v;
@@ -99,8 +99,11 @@ function htmlv(string, ...args) {
     });
   });
   
-  doc.querySelectorAll('use').forEach(v => {
+  console.log(temp);
+  console.log(string);
+  doc.querySelectorAll('template').forEach(v => {
     const velm = temp[v.getAttribute('*v')];
+    console.log(v);
     v.before(...velm);
     v.remove();
     Object.assign(variables, velm);
