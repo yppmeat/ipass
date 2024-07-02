@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マーク設定</title>
+</head>
+<body>
+  <script>
+    function getParam(key) {
+      return new URLSearchParams(location.search).get(key);
+    }
+    
+    function base642str(s) {
+      const tokens = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-';
+      let result = '';
+      for(let i = 0; i < s.length; i++) {
+        result += tokens.indexOf(s[i]).toString(2).padStart(6, '0');
+      }
+      return result;
+    }
+    
+    try {
+      localStorage.setItem('mark', (getParam('k')).slice(0, 375));
+      document.write('マークの設定が完了しました。ページを閉じてください。');
+    } catch(e) {
+      document.write('パラメータの形式が正しくありません。URLを確認してください。');
+    }
+  </script>
+</body>
+</html>

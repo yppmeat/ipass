@@ -1,9 +1,6 @@
-const PARAM =
-  location.search.slice(1).split('&').reduce((a, b) => {
-    const [key, ...value] = b.split('=');
-    a[key] = value.join('=');
-    return a;
-  }, {});
+function getParam(key) {
+  return new URLSearchParams(location.search).get(key);
+}
 
 if(!localStorage.getItem('mark')) {
   localStorage.setItem('mark', '0'.repeat(375));
@@ -23,7 +20,7 @@ function parseFlag(f) {
   return result;
 }
 
-if((['test', 'bunya'].includes(PARAM.type) && !isNaN(+PARAM.q)) || PARAM.missed != undefined) {
+if((['test', 'bunya'].includes(getParam('type')) && !isNaN(+getParam('q'))) || getParam('missed') != undefined) {
   
 } else {
   location.href = '../home/?log=パラメータの形式が正しくありません';
@@ -43,7 +40,7 @@ let DATA, WORDS, CATEGORY;
 
 let DATAcopy, DATAlength;
 function filterDATA() {
-  if(PARAM.missed != undefined) {
+  if(getParam('missed') != undefined) {
     if(!DATAcopy) DATAcopy = [...DATA];
     const missed = localStorage.getItem('missed').split(',').map(Number);
     console.log(missed);
@@ -52,16 +49,16 @@ function filterDATA() {
     });
     console.log(DATA);
   } else {
-    const flag = parseFlag(+PARAM.q);
+    const flag = parseFlag(+getParam('q'));
     let range;
-    if(PARAM.type == 'test') {
+    if(getParam('type') == 'test') {
       range = CATEGORY.testRange.filter((_, i) => {
         return flag.includes(i);
       });
     }
     if(!DATAcopy) DATAcopy = [...DATA];
     DATA = DATAcopy.filter(v => {
-      if(PARAM.type == 'test') {
+      if(getParam('type') == 'test') {
         return range.some(v2 => {
           return v2[0] <= v[4][0] && v[4][0] <= v2[1];
         });
@@ -262,7 +259,7 @@ function reload() {
   q.number1.innerText = '問' + i;
   q.current.innerText = i + '問目 / 選択範囲の問題数' + DATAlength + '問';
   
-  qType = PARAM.normal != undefined ? 1 : random(2);
+  qType = getParam('normal') != undefined ? 1 : random(2);
   if(qType) {
     q.question.innerHTML = setHints(sanitize(answer[ansIndex][1])) + 'についての説明はどれか。';
   } else {
@@ -323,14 +320,14 @@ function random(len) {
 
 function selectRandom() {
   if(!DATA.length) {
-    if(PARAM.endless == undefined) {
+    if(getParam('endless') == undefined) {
       localStorage.setItem('missed', missed.join(','));
       location.href = '../home/?log=すべての問題に回答しました' + (missed.length ? '&missed' : '');
       throw 1;
     }
     filterDATA();
   }
-  const ans = DATA.splice(PARAM.random == undefined ? 0 : random(DATA.length), 1)[0];
+  const ans = DATA.splice(getParam('random') == undefined ? 0 : random(DATA.length), 1)[0];
   const category = getCategory(ans);
   const temp = DATAcopy.filter(v => {
     return getCategory(v) == category && ans[0] != v[0];

@@ -1,9 +1,6 @@
-const PARAM =
-  location.search.slice(1).split('&').reduce((a, b) => {
-    const [key, ...value] = b.split('=');
-    a[key] = decodeURIComponent(value.join('='));
-    return a;
-  }, {});
+function getParam(key) {
+  return new URLSearchParams(location.search).get(key);
+}
 
 if(!localStorage.getItem('mark')) {
   localStorage.setItem('mark', '0'.repeat(375));
@@ -99,7 +96,7 @@ function dataLoadedHandler() {
     <div class="footerBtn">
       <div>
         ${
-          PARAM.missed != undefined ?
+          getParam('missed') != undefined ?
             htmlv/* html */`
               <button class="missed" *onclick=${missedButton}>ミスだけ出題</button>
             `
@@ -141,32 +138,23 @@ function dataLoadedHandler() {
   `;
   document.getElementById('app').append(...q);
 
-  function binaryToBase32(binaryString) {
-    let base32String = '';
-    for (let i = 0; i < binaryString.length; i += 5) {
-      let quintet = binaryString.slice(i, i + 5);
-      let decimal = parseInt(quintet, 2);
-      let base32Digit = decimal.toString(32);
-      base32String += base32Digit;
+  function str2base64(s) {
+    const tokens = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-';
+    let result = '';
+    while(s.length % 6 !== 0) {
+      s += '0';
     }
-    return base32String;
-  }
-
-  function base32ToBinary(base32String) {
-    let binaryString = '';
-    for (let i = 0; i < base32String.length; i++) {
-      let decimal = parseInt(base32String[i], 32);
-      let quintet = decimal.toString(2).padStart(5, '0');
-      binaryString += quintet;
+    for(let i = 0; i < s.length; i += 6) {
+      const index = parseInt(s.slice(i, i + 6), 2);
+      result += tokens[index];
     }
-    let neededDigits = 375;
-    binaryString = binaryString.padStart(neededDigits, '0');
-    return binaryString;
+    return result;
   }
 
   function qrmark() {
-    const base32String = binaryToBase32(marklist.join(''));
+    const base32String = str2base64(marklist.join(''));
     const url = 'https://yppmeat.github.io/ipass/mark/?k=' + base32String;
+    q.qrcode.innerText = '';
     new QRCode(q.qrcode, {
       text: url,
       width: 256,
