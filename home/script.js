@@ -108,7 +108,10 @@ function dataLoadedHandler() {
         <button class="start" *onclick=${startButton}>出題開始</button>
       </div>
     </div>
-    <span class="showmark" *onclick=${showmark}>マークを管理</span>
+    <div class="mark">
+      <span *onclick=${showmark}>マークを管理</span>
+      <span *onclick=${qrmark}>マークを共有</span>
+    </div>
     <p class="news">
       - 更新情報 -<br>
       ・直近の出題でミスした問題のみを出題できる機能を追加した<br>
@@ -132,12 +135,49 @@ function dataLoadedHandler() {
         <div>何もマークしていません<br>マークすると問題を非表示にすることができます</div>
       </div>
     </div>
+    <div class="qrmark" style=${{ display: 'none' }} *as="qrmark" *onclick=${close}>
+      <div *as="qrcode"></div>
+    </div>
   `;
   document.getElementById('app').append(...q);
 
+  function binaryToBase32(binaryString) {
+    let base32String = '';
+    for (let i = 0; i < binaryString.length; i += 5) {
+      let quintet = binaryString.slice(i, i + 5);
+      let decimal = parseInt(quintet, 2);
+      let base32Digit = decimal.toString(32);
+      base32String += base32Digit;
+    }
+    return base32String;
+  }
+
+  function base32ToBinary(base32String) {
+    let binaryString = '';
+    for (let i = 0; i < base32String.length; i++) {
+      let decimal = parseInt(base32String[i], 32);
+      let quintet = decimal.toString(2).padStart(5, '0');
+      binaryString += quintet;
+    }
+    let neededDigits = 375;
+    binaryString = binaryString.padStart(neededDigits, '0');
+    return binaryString;
+  }
+
+  function qrmark() {
+    const base32String = binaryToBase32(marklist.join(''));
+    const url = 'https://yppmeat.github.io/ipass/mark/?k=' + base32String;
+    new QRCode(q.qrcode, {
+      text: url,
+      width: 256,
+      height: 256
+    });
+    q.qrmark.style.display = 'flex';
+  }
+
   function close(e) {
     if(e.target == e.currentTarget) {
-      q.marklist.style.display = 'none';
+      e.target.style.display = 'none';
     }
   }
 
@@ -196,3 +236,5 @@ function dataLoadedHandler() {
     return s.reduce((a, b) => a + b);
   }
 }
+
+// 111111111110111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001111111100000000000000000101001110000000001111111111111101111111111111000000000000000000000000000000000001011100100000000000000000000000000000000000000000000000000

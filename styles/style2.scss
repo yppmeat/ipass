@@ -149,12 +149,20 @@
   }
 }
 
-.showmark {
-  text-align: center !important;
-  cursor: pointer;
+.mark {
+  color: grey;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-direction: row;
+
+  span {
+    cursor: pointer;
   
-  &:hover {
-    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

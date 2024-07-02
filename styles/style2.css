@@ -139,11 +139,18 @@
   content: "START";
 }
 
-.showmark {
-  text-align: center !important;
+.mark {
+  color: grey;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-direction: row;
+}
+.mark span {
   cursor: pointer;
 }
-.showmark:hover {
+.mark span:hover {
   text-decoration: underline;
 }
 
