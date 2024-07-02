@@ -12,7 +12,7 @@
     }
     
     function base642str(s) {
-      const tokens = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-';
+      const tokens = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
       let result = '';
       for(let i = 0; i < s.length; i++) {
         result += tokens.indexOf(s[i]).toString(2).padStart(6, '0');

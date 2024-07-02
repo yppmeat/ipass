@@ -139,7 +139,7 @@ function dataLoadedHandler() {
   document.getElementById('app').append(...q);
 
   function str2base64(s) {
-    const tokens = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-';
+    const tokens = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
     let result = '';
     while(s.length % 6 !== 0) {
       s += '0';
