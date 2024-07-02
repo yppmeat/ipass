@@ -99,11 +99,8 @@ function htmlv(string, ...args) {
     });
   });
   
-  console.log(temp);
-  console.log(string);
   doc.querySelectorAll('template').forEach(v => {
     const velm = temp[v.getAttribute('*v')];
-    console.log(v);
     v.before(...velm);
     v.remove();
     Object.assign(variables, velm);

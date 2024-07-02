@@ -28,6 +28,7 @@ function dataLoadedHandler() {
     `;
   });
   let offset = 0;
+  let count = 0;
   const bunya =
   Array(3).fill().map((_, i) => {
     offset += [0, 7, 5][i];
@@ -37,11 +38,16 @@ function dataLoadedHandler() {
           <input type="checkbox" checked data-index="${i}" *onchange=${clickCategory}>${CATEGORY.category[i][1]}
         </label>
         ${Array([7, 5, 11][i]).fill().map((_, j) => {
+          const currentCount = CATEGORY.count[offset + j];
+          let ratio = currentCount / marklist.slice(count, count + currentCount).filter(v => +v).length;
+          if(!isFinite(ratio)) ratio = 0;
+          count += currentCount;
           return /* html*/`
-            <label>
-              <input type="checkbox" checked data-index="${offset + j}">${CATEGORY.subcategory[offset + j]}(${CATEGORY.count[offset + j]})
+            <label class="${ratio == 1 ? 'mk1' : (ratio == 0 ? 'mk3' : 'mk2')}">
+              <input type="checkbox" checked data-index="${offset + j}">${CATEGORY.subcategory[offset + j]}(${currentCount})
             </label>
           `;
+          
         })}
       </div>
     `;
@@ -103,6 +109,13 @@ function dataLoadedHandler() {
       </div>
     </div>
     <span class="showmark" *onclick=${showmark}>マークを管理</span>
+    <p class="news">
+      - 更新情報 -<br>
+      ・直近の出題でミスした問題のみを出題できる機能を追加した<br>
+      ・覚えた問題を非表示にするマーク機能を追加した<br>
+      ・選択肢を非表示にして自由形式で入力できる機能を追加した<br>
+      ・テスト範囲別、分野別に出題できる機能を追加した
+    </p>
     <div class="marklist" style=${{ display: 'none' }} *as="marklist" *onclick=${close}>
       <div>
         <table>
