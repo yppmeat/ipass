@@ -21,7 +21,7 @@
     }
     
     try {
-      localStorage.setItem('mark', (getParam('k')).slice(0, 375));
+      localStorage.setItem('mark', base642str(getParam('k')).slice(0, 375));
       document.write('マークの設定が完了しました。ページを閉じてください。');
     } catch(e) {
       document.write('パラメータの形式が正しくありません。URLを確認してください。');
