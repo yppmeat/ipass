@@ -6,7 +6,6 @@ if(!localStorage.getItem('mark')) {
   localStorage.setItem('mark', '0'.repeat(375));
 }
 let marklist = localStorage.getItem('mark').split('');
-console.log(marklist);
 
 function parseFlag(f) {
   const result = [];
@@ -45,11 +44,9 @@ function filterDATA() {
   if(getParam('missed') != undefined) {
     if(!DATAcopy) DATAcopy = [...DATA];
     const missed = localStorage.getItem('missed').split(',').map(Number);
-    console.log(missed);
     DATA = DATAcopy.filter(v => {
       return missed.includes(v[0]);
     });
-    console.log(DATA);
   } else {
     const flag = parseFlag(+getParam('q'));
     let range;
@@ -68,8 +65,9 @@ function filterDATA() {
       return flag.includes(v[4][0]);
     });
   }
+  const marked = getParam('marked') != undefined;
   DATA = DATA.filter(v => {
-    return marklist[v[0]] == (getParam('marked') != undefined ? '1' : '0');
+    return marklist[v[0]] == (marked ? '1' : '0');
   });
   DATAlength = DATA.length;
 }
@@ -173,7 +171,6 @@ function dataLoadedHandler() {
     </div>
   `;
   app.append(...q);
-  console.log(q);
   reload();
   resize();
   if(getParam('simple') != undefined) {
@@ -192,14 +189,12 @@ function mark() {
     alert('マークしました。この問題は今後出題されません。トップページから解除することができます。');
     localStorage.setItem('marked', 'marked');
   }
-  console.log(currentId, q.mark.checked);
   setMark(currentId, q.mark.checked);
 }
 
 function setMark(id, on) {
   marklist[id] = on ? '1' : '0';
   localStorage.setItem('mark', marklist.join(''));
-  console.log(marklist);
 }
 
 function finish() {
@@ -246,7 +241,6 @@ function reload() {
   if(!correct && answer) {
     if(!missed.includes(currentId)) {
       missed.push(currentId);
-      console.log(missed);
     }
     correct = false;
   }
