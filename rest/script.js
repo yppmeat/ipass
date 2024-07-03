@@ -258,7 +258,7 @@ function reload() {
   q.number1.innerText = '問' + i;
   q.current.innerText = i + '問目 / 選択範囲の問題数' + DATAlength + '問';
   
-  qType = getParam('normal') != undefined ? 1 : random(2);
+  qType = getParam('normal') != undefined ? 1 : 0;
   if(qType) {
     q.question.innerHTML = setHints(sanitize(answer[ansIndex][1])) + 'についての説明はどれか。';
   } else {
