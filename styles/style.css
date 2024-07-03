@@ -295,6 +295,10 @@ body.hideans .memo {
   text-decoration: underline;
 }
 
+body.simple .simple {
+  display: none;
+}
+
 .popup {
   display: flex;
   border: 1px solid #d5d5d5;

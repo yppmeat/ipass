@@ -92,6 +92,9 @@ function dataLoadedHandler() {
       <label>
         <input type="checkbox" data-value="normal" checked>用語→説明の形式で出題する
       </label>
+      <label>
+        <input type="checkbox" data-value="simple" *onclick=${simplemode}>シンプルモード
+      </label>
     </div>
     <div class="footerBtn">
       <div>
@@ -137,6 +140,13 @@ function dataLoadedHandler() {
     </div>
   `;
   document.getElementById('app').append(...q);
+
+  function simplemode() {
+    if(localStorage.getItem('simple') == undefined) {
+      alert('シンプルモードでは選択肢の数が一つになり、自由入力を強制します。選択することではなく言葉で答えることに重点を置いた人のためのモードです。');
+      localStorage.setItem('simple', 'simple');
+    }
+  }
 
   function str2base64(s) {
     const tokens = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -224,5 +234,3 @@ function dataLoadedHandler() {
     return s.reduce((a, b) => a + b);
   }
 }
-
-// 111111111110111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001111111100000000000000000101001110000000001111111111111101111111111111000000000000000000000000000000000001011100100000000000000000000000000000000000000000000000000

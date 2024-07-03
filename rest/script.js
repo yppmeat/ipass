@@ -21,7 +21,9 @@ function parseFlag(f) {
 }
 
 if((['test', 'bunya'].includes(getParam('type')) && !isNaN(+getParam('q'))) || getParam('missed') != undefined) {
-  
+  if(getParam('simple') != undefined) {
+    document.body.classList.add('simple');
+  }
 } else {
   location.href = '../home/?log=パラメータの形式が正しくありません';
   throw 0;
@@ -85,15 +87,15 @@ function dataLoadedHandler() {
         <input type="button" value="ア" data-index="0" *onclick=${ansClick}>
         <span *as="ans[0]" *onclick=${spanClick}></span>
       </div>
-      <div>
+      <div class="simple">
         <input type="button" value="イ" data-index="1" *onclick=${ansClick}>
         <span *as="ans[1]" *onclick=${spanClick}></span>
       </div>
-      <div>
+      <div class="simple">
         <input type="button" value="ウ" data-index="2" *onclick=${ansClick}>
         <span *as="ans[2]" *onclick=${spanClick}></span>
       </div>
-      <div>
+      <div class="simple">
         <input type="button" value="エ" data-index="3" *onclick=${ansClick}>
         <span *as="ans[3]" *onclick=${spanClick}></span>
       </div>
@@ -130,19 +132,19 @@ function dataLoadedHandler() {
             </div>
             <div class="lower" data-index="0" *as="desc[0]" *onclick=${linkClick}></div>
           </div>
-          <div>
+          <div class="simple">
             <div class="upper">
               <span class="ans">イ</span>：<span class="name" *as="title[1]"></span>
             </div>
             <div class="lower" data-index="1" *as="desc[1]" *onclick=${linkClick}></div>
           </div>
-          <div>
+          <div class="simple">
             <div class="upper">
               <span class="ans">ウ</span>：<span class="name" *as="title[2]"></span>
             </div>
             <div class="lower" data-index="2" *as="desc[2]" *onclick=${linkClick}></div>
           </div>
-          <div>
+          <div class="simple">
             <div class="upper">
               <span class="ans">エ</span>：<span class="name" *as="title[3]"></span>
             </div>
@@ -174,6 +176,9 @@ function dataLoadedHandler() {
   console.log(q);
   reload();
   resize();
+  if(getParam('simple') != undefined) {
+    hideshow();
+  }
 }
 const missed = [];
 let hidden = false;
@@ -336,8 +341,8 @@ function selectRandom() {
   for(let i = 0; i < 3; i++) {
     result.push(temp.splice(random(temp.length), 1)[0]);
   }
-  const ansIndex = random(4);
-  result.splice(ansIndex, 0, ans)
+  const ansIndex = getParam('simple') != undefined ? 0 : random(4);
+  result.splice(ansIndex, 0, ans);
   return [result, ansIndex];
 }
 

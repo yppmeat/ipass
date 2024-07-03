@@ -108,7 +108,8 @@
   position: relative;
   margin-top: 30px;
   display: flex;
-  gap: 30px;
+  gap: 10px 30px;
+  flex-wrap: wrap;
 }
 .options:before {
   content: "オプション項目";
