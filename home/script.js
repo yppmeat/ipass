@@ -93,6 +93,9 @@ function dataLoadedHandler() {
         <input type="checkbox" data-value="normal" checked>用語→説明の形式で出題する
       </label>
       <label>
+        <input type="checkbox" data-value="marked">マークした問題のみを出題する
+      </label>
+      <label>
         <input type="checkbox" data-value="simple" *onclick=${simplemode}>シンプルモード
       </label>
     </div>
@@ -114,6 +117,9 @@ function dataLoadedHandler() {
     </div>
     <p class="news">
       - 更新情報 -<br>
+      ・マークした問題のみを出題できる機能を追加した<br>
+      ・シンプルモードを実装した<br>
+      ・マークした問題をQRコードで表示して別の端末に引き継げるようにした<br>
       ・直近の出題でミスした問題のみを出題できる機能を追加した<br>
       ・覚えた問題を非表示にするマーク機能を追加した<br>
       ・選択肢を非表示にして自由形式で入力できる機能を追加した<br>
