@@ -69,7 +69,7 @@ function filterDATA() {
     });
   }
   DATA = DATA.filter(v => {
-    return marklist[v[0]] == (getParam('marked') == undefined ? '1' : '0');
+    return marklist[v[0]] == (getParam('marked') != undefined ? '1' : '0');
   });
   DATAlength = DATA.length;
 }
